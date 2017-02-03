@@ -18,6 +18,8 @@
 		B0A564851E4301FA009EC182 /* WebParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A564841E4301FA009EC182 /* WebParser.swift */; };
 		B0A564931E4306FC009EC182 /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A564921E4306FC009EC182 /* Kanna.framework */; };
 		B0A564941E4306FC009EC182 /* Kanna.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B0A564921E4306FC009EC182 /* Kanna.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B0A564961E441DD2009EC182 /* BookTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A564951E441DD2009EC182 /* BookTitleCell.swift */; };
+		B0A5649C1E44411F009EC182 /* test2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0A5649B1E44411F009EC182 /* test2.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +123,8 @@
 		B0A564841E4301FA009EC182 /* WebParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebParser.swift; sourceTree = "<group>"; };
 		B0A564861E4305D5009EC182 /* Kanna.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Kanna.xcodeproj; path = Carthage/Checkouts/Kanna/Kanna.xcodeproj; sourceTree = "<group>"; };
 		B0A564921E4306FC009EC182 /* Kanna.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kanna.framework; path = Carthage/Build/iOS/Kanna.framework; sourceTree = "<group>"; };
+		B0A564951E441DD2009EC182 /* BookTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookTitleCell.swift; sourceTree = "<group>"; };
+		B0A5649B1E44411F009EC182 /* test2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test2.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +162,7 @@
 		B0A5644D1E42FF3F009EC182 /* WebReader */ = {
 			isa = PBXGroup;
 			children = (
+				B0A5649B1E44411F009EC182 /* test2.jpg */,
 				B0A5644E1E42FF3F009EC182 /* AppDelegate.swift */,
 				B0A564501E42FF3F009EC182 /* ViewController.swift */,
 				B0A564521E42FF3F009EC182 /* Main.storyboard */,
@@ -166,6 +171,7 @@
 				B0A5645D1E42FF3F009EC182 /* Info.plist */,
 				B0A564551E42FF3F009EC182 /* WebReader.xcdatamodeld */,
 				B0A564841E4301FA009EC182 /* WebParser.swift */,
+				B0A564951E441DD2009EC182 /* BookTitleCell.swift */,
 			);
 			path = WebReader;
 			sourceTree = "<group>";
@@ -334,6 +340,7 @@
 			files = (
 				B0A5645C1E42FF3F009EC182 /* LaunchScreen.storyboard in Resources */,
 				B0A564591E42FF3F009EC182 /* Assets.xcassets in Resources */,
+				B0A5649C1E44411F009EC182 /* test2.jpg in Resources */,
 				B0A564541E42FF3F009EC182 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -364,6 +371,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0A564961E441DD2009EC182 /* BookTitleCell.swift in Sources */,
 				B0A564571E42FF3F009EC182 /* WebReader.xcdatamodeld in Sources */,
 				B0A564511E42FF3F009EC182 /* ViewController.swift in Sources */,
 				B0A5644F1E42FF3F009EC182 /* AppDelegate.swift in Sources */,
