@@ -20,6 +20,13 @@
 		B0A564941E4306FC009EC182 /* Kanna.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B0A564921E4306FC009EC182 /* Kanna.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B0A564961E441DD2009EC182 /* BookTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A564951E441DD2009EC182 /* BookTitleCell.swift */; };
 		B0A5649C1E44411F009EC182 /* test2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0A5649B1E44411F009EC182 /* test2.jpg */; };
+		B0DB099B1E46CC080021C0DF /* TableContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DB099A1E46CC080021C0DF /* TableContentViewController.swift */; };
+		B0DB09A61E46D4030021C0DF /* TableContentSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DB09A51E46D4030021C0DF /* TableContentSegue.swift */; };
+		B0DB09A81E46D41C0021C0DF /* TableContentUnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DB09A71E46D41C0021C0DF /* TableContentUnwindSegue.swift */; };
+		B0DB09AA1E46E0F60021C0DF /* ChapterContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DB09A91E46E0F60021C0DF /* ChapterContentViewController.swift */; };
+		B0DB09AC1E46EF790021C0DF /* ChapterTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DB09AB1E46EF790021C0DF /* ChapterTitleCell.swift */; };
+		B0DB09AE1E4701C70021C0DF /* ChapterContentSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DB09AD1E4701C70021C0DF /* ChapterContentSegue.swift */; };
+		B0DB09B01E47025E0021C0DF /* ChapterContentUnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DB09AF1E47025E0021C0DF /* ChapterContentUnwindSegue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +132,13 @@
 		B0A564921E4306FC009EC182 /* Kanna.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kanna.framework; path = Carthage/Build/iOS/Kanna.framework; sourceTree = "<group>"; };
 		B0A564951E441DD2009EC182 /* BookTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookTitleCell.swift; sourceTree = "<group>"; };
 		B0A5649B1E44411F009EC182 /* test2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test2.jpg; sourceTree = "<group>"; };
+		B0DB099A1E46CC080021C0DF /* TableContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableContentViewController.swift; sourceTree = "<group>"; };
+		B0DB09A51E46D4030021C0DF /* TableContentSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableContentSegue.swift; sourceTree = "<group>"; };
+		B0DB09A71E46D41C0021C0DF /* TableContentUnwindSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableContentUnwindSegue.swift; sourceTree = "<group>"; };
+		B0DB09A91E46E0F60021C0DF /* ChapterContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChapterContentViewController.swift; sourceTree = "<group>"; };
+		B0DB09AB1E46EF790021C0DF /* ChapterTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChapterTitleCell.swift; sourceTree = "<group>"; };
+		B0DB09AD1E4701C70021C0DF /* ChapterContentSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChapterContentSegue.swift; sourceTree = "<group>"; };
+		B0DB09AF1E47025E0021C0DF /* ChapterContentUnwindSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChapterContentUnwindSegue.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,13 +179,20 @@
 				B0A5649B1E44411F009EC182 /* test2.jpg */,
 				B0A5644E1E42FF3F009EC182 /* AppDelegate.swift */,
 				B0A564501E42FF3F009EC182 /* ViewController.swift */,
+				B0DB099A1E46CC080021C0DF /* TableContentViewController.swift */,
+				B0DB09A91E46E0F60021C0DF /* ChapterContentViewController.swift */,
 				B0A564521E42FF3F009EC182 /* Main.storyboard */,
+				B0DB09A51E46D4030021C0DF /* TableContentSegue.swift */,
+				B0DB09A71E46D41C0021C0DF /* TableContentUnwindSegue.swift */,
 				B0A564581E42FF3F009EC182 /* Assets.xcassets */,
 				B0A5645A1E42FF3F009EC182 /* LaunchScreen.storyboard */,
 				B0A5645D1E42FF3F009EC182 /* Info.plist */,
 				B0A564551E42FF3F009EC182 /* WebReader.xcdatamodeld */,
 				B0A564841E4301FA009EC182 /* WebParser.swift */,
 				B0A564951E441DD2009EC182 /* BookTitleCell.swift */,
+				B0DB09AB1E46EF790021C0DF /* ChapterTitleCell.swift */,
+				B0DB09AD1E4701C70021C0DF /* ChapterContentSegue.swift */,
+				B0DB09AF1E47025E0021C0DF /* ChapterContentUnwindSegue.swift */,
 			);
 			path = WebReader;
 			sourceTree = "<group>";
@@ -372,9 +393,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0A564961E441DD2009EC182 /* BookTitleCell.swift in Sources */,
+				B0DB09A81E46D41C0021C0DF /* TableContentUnwindSegue.swift in Sources */,
+				B0DB09AE1E4701C70021C0DF /* ChapterContentSegue.swift in Sources */,
 				B0A564571E42FF3F009EC182 /* WebReader.xcdatamodeld in Sources */,
+				B0DB099B1E46CC080021C0DF /* TableContentViewController.swift in Sources */,
+				B0DB09AC1E46EF790021C0DF /* ChapterTitleCell.swift in Sources */,
 				B0A564511E42FF3F009EC182 /* ViewController.swift in Sources */,
+				B0DB09AA1E46E0F60021C0DF /* ChapterContentViewController.swift in Sources */,
 				B0A5644F1E42FF3F009EC182 /* AppDelegate.swift in Sources */,
+				B0DB09A61E46D4030021C0DF /* TableContentSegue.swift in Sources */,
+				B0DB09B01E47025E0021C0DF /* ChapterContentUnwindSegue.swift in Sources */,
 				B0A564851E4301FA009EC182 /* WebParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -557,6 +585,7 @@
 				B0A564621E42FF3F009EC182 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
