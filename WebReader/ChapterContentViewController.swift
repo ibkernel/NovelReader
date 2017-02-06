@@ -28,6 +28,8 @@ class ChapterContentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         chapterContentText.isEditable = false
+        chapterContentText.backgroundColor = UIColor.black
+        chapterContentText.textColor = UIColor.white
         chapterContentText.font = UIFont(name: (chapterContentText?.font?.fontName)!, size: 24)
         // Do any additional setup after loading the view.
         print(chapterUrl)
@@ -47,6 +49,12 @@ class ChapterContentViewController: UIViewController {
             secondViewController.bookInfo = selectedBook
         }
     }
+    
+    // hide status bar only on this screen
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
     /*
     // MARK: - Navigation
 

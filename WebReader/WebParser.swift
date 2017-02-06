@@ -79,7 +79,8 @@ var n:String? = "read.aspx?tid=39314&sid=145510"
 
 
 var NonSense: [String] = [
-    "(adsbygoogle = window.adsbygoogle || []).push({});", "章节缺失、错误举报", "U","看书"
+    "(adsbygoogle = window.adsbygoogle || []).push({});", "章节缺失、错误举报", "U","看书","请记住本书首发域名",
+    "言情小说网手机版阅读网址：","手机版阅读网址：", "：。"
 ]
 
 func getBookTitle(completionHandler: @escaping (String) ->()){
@@ -89,8 +90,8 @@ func getBookTitle(completionHandler: @escaping (String) ->()){
         if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
             if let doc = Kanna.HTML(html: utf8Text, encoding: .utf8) {
                 if let bookname = doc.at_css("dl dt"){
-                    
-                    completionHandler(bookname.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
+                    let bookNameT = convertToTraditional(text:bookname.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))!
+                    completionHandler(bookNameT)
                 }
             }
         }
@@ -108,7 +109,8 @@ func getBookChapterList(url: String, completionHandler: @escaping ([chapterTuple
         if let data = response.data, let utf8Text = String(data:data, encoding: .utf8) {
             if let doc = Kanna.HTML(html: utf8Text, encoding: .utf8) {
                 for link in doc.xpath("//div[contains(@class, 'ml-list')] // a") {
-                    chapterInfo = (text:link.text!, url:link["href"]!)
+                    chapterInfo = (text:convertToTraditional(text:link.text!), url:link["href"]!)
+                    //chapterInfo = (text:link.text!, url:link["href"]!)
                     chapterList.append(chapterInfo)
                 }
                 completionHandler(chapterList)
@@ -122,17 +124,52 @@ func getChapterContent(url: String, completionHandler: @escaping (String) -> ())
     var contentText: String = ""
     let fullUrl = "http://" + domain! + url
     
+    
     Alamofire.request(fullUrl).response{ response in
-        if let data = response.data, let utf8Text = String(data:data, encoding: .utf8){
+        if let data = response.data, var utf8Text = String(data:data, encoding: .utf8){
+            // refine content presentation
+            utf8Text = utf8Text.replacingOccurrences(of: "<br>", with: "\n")
+            utf8Text = utf8Text.replacingOccurrences(of: "<br/>", with: "\n")
+            utf8Text = utf8Text.replacingOccurrences(of: "<p>", with: "\n")
+            utf8Text = utf8Text.replacingOccurrences(of: "<p/>", with: "\n")
             if let doc = Kanna.HTML(html: utf8Text, encoding: .utf8) {
+                
+                
                 for content in doc.xpath("//div[contains(@id, 'bookContent')]") {
                     contentText += content.text!
                 }
-                // Compare time with the replacing function inside the above for loop
+                /*
+                // This method sucks, too many uncertainties
+                
+                let tmp = doc.xpath("//div[contains(@id, 'bookContent')] //p")
+                if tmp.count == 0 {
+                    for content in doc.xpath("//div[contains(@id, 'bookContent')]") {
+                        contentText += content.text!
+                    }
+                    contentText = contentText.replacingOccurrences(of: "　　", with: "\n        ")
+
+                } else {
+                    
+                    // In some situation there are texts not in <p/>
+                    
+                    
+                    for content in doc.xpath("//div[contains(@id, 'bookContent')] //p") {
+                        contentText += "    "
+                        contentText += content.text!
+                        contentText += "\n"
+                    }
+                    print(doc.text!)
+                    
+                    
+                }
+                */
+                //contentText = contentText.replacingOccurrences(of: "“", with: "“")
+                
+                // Compare time with the replacing function inside the above for-loop
                 for words in NonSense {
                     contentText = contentText.replacingOccurrences(of: words, with: "")
                 }
-                
+                contentText = convertToTraditional(text:contentText)!
                 completionHandler(contentText)
             }
             
@@ -141,6 +178,8 @@ func getChapterContent(url: String, completionHandler: @escaping (String) -> ())
     }
     
 }
+
+/*
 
 func getPureContent() -> Void {
     Alamofire.request(Urls.book1.rawValue).response { response in
@@ -193,6 +232,6 @@ func getPureContent() -> Void {
             }
         }
     }
-
-
 }
+ 
+ */

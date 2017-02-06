@@ -27,6 +27,7 @@
 		B0DB09AC1E46EF790021C0DF /* ChapterTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DB09AB1E46EF790021C0DF /* ChapterTitleCell.swift */; };
 		B0DB09AE1E4701C70021C0DF /* ChapterContentSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DB09AD1E4701C70021C0DF /* ChapterContentSegue.swift */; };
 		B0DB09B01E47025E0021C0DF /* ChapterContentUnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DB09AF1E47025E0021C0DF /* ChapterContentUnwindSegue.swift */; };
+		B0DB09B21E476C440021C0DF /* sttConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DB09B11E476C440021C0DF /* sttConverter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,6 +140,7 @@
 		B0DB09AB1E46EF790021C0DF /* ChapterTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChapterTitleCell.swift; sourceTree = "<group>"; };
 		B0DB09AD1E4701C70021C0DF /* ChapterContentSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChapterContentSegue.swift; sourceTree = "<group>"; };
 		B0DB09AF1E47025E0021C0DF /* ChapterContentUnwindSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChapterContentUnwindSegue.swift; sourceTree = "<group>"; };
+		B0DB09B11E476C440021C0DF /* sttConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sttConverter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +195,7 @@
 				B0DB09AB1E46EF790021C0DF /* ChapterTitleCell.swift */,
 				B0DB09AD1E4701C70021C0DF /* ChapterContentSegue.swift */,
 				B0DB09AF1E47025E0021C0DF /* ChapterContentUnwindSegue.swift */,
+				B0DB09B11E476C440021C0DF /* sttConverter.swift */,
 			);
 			path = WebReader;
 			sourceTree = "<group>";
@@ -396,6 +399,7 @@
 				B0DB09A81E46D41C0021C0DF /* TableContentUnwindSegue.swift in Sources */,
 				B0DB09AE1E4701C70021C0DF /* ChapterContentSegue.swift in Sources */,
 				B0A564571E42FF3F009EC182 /* WebReader.xcdatamodeld in Sources */,
+				B0DB09B21E476C440021C0DF /* sttConverter.swift in Sources */,
 				B0DB099B1E46CC080021C0DF /* TableContentViewController.swift in Sources */,
 				B0DB09AC1E46EF790021C0DF /* ChapterTitleCell.swift in Sources */,
 				B0A564511E42FF3F009EC182 /* ViewController.swift in Sources */,

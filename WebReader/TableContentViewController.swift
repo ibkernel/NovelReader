@@ -21,12 +21,11 @@ class TableContentViewController: UIViewController {
         super.viewDidLoad()
         print("In tableContentView")
         print("message sent from previous controller: \(bookInfo.bookUrl)")
+                // Do any additional setup after loading the view.
         getBookChapterList(url: bookInfo.bookUrl){ chapterInfo in
             self.chapters = chapterInfo
             self.chapterListTable.reloadData()
         }
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,7 +37,10 @@ class TableContentViewController: UIViewController {
         print("You have touched me!")
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        print("in viewWillAppear")
 
+    }
     
     // MARK: - Navigation
 
@@ -60,7 +62,7 @@ extension TableContentViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Table content:::You clicked me at \(indexPath.row)")
         
-        selectedChapter = chapters[indexPath.row].url as NSString!
+        selectedChapter = chapters[chapters.count - indexPath.row - 1].url as NSString!
         self.performSegue(withIdentifier: "showChapterContent", sender: self)
         
     }
@@ -78,7 +80,7 @@ extension TableContentViewController: UITableViewDataSource {
         
         
         let cell: UITableViewCell
-        let chapterTitle = chapters[indexPath.row].text
+        let chapterTitle = chapters[chapters.count - indexPath.row - 1].text
         //let chapterUrl = chapters[indexPath.row].url
         
         cell = tableView.dequeueReusableCell(withIdentifier: "chapterTitleCell", for: indexPath)
@@ -92,6 +94,5 @@ extension TableContentViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return chapters.count
-        //return 10
     }
 }
