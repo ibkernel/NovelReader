@@ -169,7 +169,9 @@ func getChapterContent(url: String, completionHandler: @escaping (String) -> ())
                 for words in NonSense {
                     contentText = contentText.replacingOccurrences(of: words, with: "")
                 }
+
                 contentText = convertToTraditional(text:contentText)!
+
                 completionHandler(contentText)
             }
             

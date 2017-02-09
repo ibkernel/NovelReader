@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="EcH-RQ-qbg">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,205 +9,134 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--我的書庫-->
+        <scene sceneID="1I3-Oo-vtB">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="WebReader" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                <tableViewController id="3dM-re-ZuC" customClass="HomeTableViewController" customModule="WebReader" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="hZY-wZ-Ynp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2CX-ke-ARX">
-                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                                <items>
-                                    <navigationItem title="我的書單" id="6iD-Jj-ent"/>
-                                </items>
-                            </navigationBar>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="vHz-Uw-ukO">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Pke-Hn-Lyy">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                                        <subviews>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="f5C-lM-Sje">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="bookTitleCell" textLabel="iaj-ac-jgf" detailTextLabel="gwO-6h-tum" style="IBUITableViewCellStyleSubtitle" id="txo-a9-qWr" customClass="BookTitleCell" customModule="WebReader" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                                        <autoresizingMask key="autoresizingMask"/>
-                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="txo-a9-qWr" id="tAn-zM-N4d">
-                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                            <subviews>
-                                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iaj-ac-jgf">
-                                                                    <rect key="frame" x="15" y="5" width="33" height="20"/>
-                                                                    <autoresizingMask key="autoresizingMask"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gwO-6h-tum">
-                                                                    <rect key="frame" x="15" y="25" width="44" height="15"/>
-                                                                    <autoresizingMask key="autoresizingMask"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                            </subviews>
-                                                        </tableViewCellContentView>
-                                                    </tableViewCell>
-                                                </prototypes>
-                                                <connections>
-                                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="Eby-qE-E6Z"/>
-                                                    <outlet property="delegate" destination="BYZ-38-t0r" id="rUQ-LA-6bv"/>
-                                                </connections>
-                                            </tableView>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="2CX-ke-ARX" secondAttribute="trailing" id="8CN-t0-4JF"/>
-                            <constraint firstItem="2CX-ke-ARX" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="BtA-IE-G7k"/>
-                            <constraint firstItem="2CX-ke-ARX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="IIt-u9-gpe"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="BookListTable" destination="f5C-lM-Sje" id="oty-9B-atl"/>
-                        <segue destination="xdE-6P-leS" kind="custom" identifier="showContentTable" customClass="TableContentSegue" customModule="WebReader" customModuleProvider="target" id="8Py-ZD-bE0"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-471" y="-18"/>
-        </scene>
-        <!--Table Content View Controller-->
-        <scene sceneID="SJY-02-VCm">
-            <objects>
-                <viewController id="xdE-6P-leS" customClass="TableContentViewController" customModule="WebReader" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="a3R-RS-rTM"/>
-                        <viewControllerLayoutGuide type="bottom" id="ACe-cO-T68"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="WzO-u8-yLe" customClass="TableContent">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GDQ-ON-NCd">
-                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <items>
-                                    <navigationItem title="書名" id="Oeh-n7-Bub">
-                                        <barButtonItem key="leftBarButtonItem" style="plain" id="PU5-hs-LnM">
-                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hma-yN-9N1">
-                                                <rect key="frame" x="16" y="1" width="69" height="42"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" title="Go back"/>
-                                                <connections>
-                                                    <action selector="GoBack:" destination="xdE-6P-leS" eventType="touchUpInside" id="Huh-Qu-3sp"/>
-                                                    <segue destination="BYZ-38-t0r" kind="custom" identifier="goBackToMenu" customClass="TableContentUnwindSegue" customModule="WebReader" customModuleProvider="target" id="zQB-Eh-ATm"/>
-                                                </connections>
-                                            </button>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5Qv-BT-lzM">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="chapterTitleCell" textLabel="bvY-gR-GFV" style="IBUITableViewCellStyleDefault" id="0a6-Uh-VhB" customClass="ChapterTitleCell" customModule="WebReader" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0a6-Uh-VhB" id="dRs-Dw-OOH">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bvY-gR-GFV">
-                                                    <rect key="frame" x="15" y="0.0" width="345" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="xdE-6P-leS" id="2NN-ec-9vE"/>
-                                    <outlet property="delegate" destination="xdE-6P-leS" id="zW8-V8-ypN"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="bookTitleCell" id="gJ0-U2-P9V" customClass="BookTitleCell" customModule="WebReader" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gJ0-U2-P9V" id="n6g-fF-VW8">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="3dM-re-ZuC" id="hib-Gv-xUB"/>
+                            <outlet property="delegate" destination="3dM-re-ZuC" id="Zrq-dS-KUQ"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="我的書庫" id="Nuw-xN-nqP"/>
                     <connections>
-                        <outlet property="chapterListTable" destination="5Qv-BT-lzM" id="eQ3-zp-9Pi"/>
-                        <segue destination="D3C-YP-6ZT" kind="custom" identifier="showChapterContent" customClass="ChapterContentSegue" customModule="WebReader" customModuleProvider="target" id="mAl-UN-SMD"/>
+                        <outlet property="BookListTable" destination="hZY-wZ-Ynp" id="zY1-fN-p2i"/>
+                        <outlet property="bookListTable" destination="hZY-wZ-Ynp" id="I2e-8N-6Cr"/>
+                        <segue destination="3mR-Og-kRv" kind="show" identifier="showChapterListsSegue" id="Avf-ES-2ao"/>
                     </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dcT-dO-UBF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rIJ-cy-nYS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="680.79999999999995" y="-18.440779610194905"/>
+            <point key="canvasLocation" x="-471" y="780"/>
         </scene>
-        <!--Chapter Content View Controller-->
-        <scene sceneID="97s-ha-UzS">
+        <!--目錄-->
+        <scene sceneID="IOW-be-J2M">
             <objects>
-                <viewController id="D3C-YP-6ZT" customClass="ChapterContentViewController" customModule="WebReader" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="3mR-Og-kRv" customClass="BookTableContentViewController" customModule="WebReader" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="kA8-hG-Ot0">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="chapterTitleCell" textLabel="K14-iQ-cN6" style="IBUITableViewCellStyleDefault" id="8ON-yd-cGg">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8ON-yd-cGg" id="Z7W-Qb-1LY">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="K14-iQ-cN6">
+                                            <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="3mR-Og-kRv" id="1Ra-D4-m89"/>
+                            <outlet property="delegate" destination="3mR-Og-kRv" id="yqA-la-KSK"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="目錄" id="63O-Us-Vrg"/>
+                    <connections>
+                        <outlet property="chapterListTable" destination="kA8-hG-Ot0" id="PbJ-Yb-SSH"/>
+                        <segue destination="6xo-U5-p8c" kind="show" identifier="showChapterContentSegue" id="WxI-L0-PYF"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jc2-LP-sIQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="348" y="779"/>
+        </scene>
+        <!--內文-->
+        <scene sceneID="InT-xu-6Ah">
+            <objects>
+                <viewController id="6xo-U5-p8c" customClass="BookContentViewController" customModule="WebReader" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="I8c-jd-KlY"/>
-                        <viewControllerLayoutGuide type="bottom" id="mWN-Xr-GP7"/>
+                        <viewControllerLayoutGuide type="top" id="EEd-H9-F75"/>
+                        <viewControllerLayoutGuide type="bottom" id="kf8-Yr-35M"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="qf2-Xd-Wqg">
+                    <view key="view" contentMode="scaleToFill" id="Lsp-gs-Wm1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vGb-cn-Wr0">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="aLL-36-oQD">
+                                <rect key="frame" x="0.0" y="65" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="24X-4e-4Y9" appends="YES" id="hz6-64-AYh"/>
-                                </connections>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="vGb-cn-Wr0" firstAttribute="top" secondItem="I8c-jd-KlY" secondAttribute="bottom" id="6FE-RD-pF8"/>
-                            <constraint firstItem="vGb-cn-Wr0" firstAttribute="leading" secondItem="qf2-Xd-Wqg" secondAttribute="leading" id="P7X-ra-8Ia"/>
-                            <constraint firstItem="mWN-Xr-GP7" firstAttribute="top" secondItem="vGb-cn-Wr0" secondAttribute="bottom" id="l5g-Sy-Hub"/>
-                            <constraint firstAttribute="trailing" secondItem="vGb-cn-Wr0" secondAttribute="trailing" id="z9i-FY-vjK"/>
+                            <constraint firstItem="aLL-36-oQD" firstAttribute="top" secondItem="EEd-H9-F75" secondAttribute="bottom" id="0Hm-rN-gnX"/>
+                            <constraint firstItem="aLL-36-oQD" firstAttribute="leading" secondItem="Lsp-gs-Wm1" secondAttribute="leading" id="0Lg-jN-ycA"/>
+                            <constraint firstAttribute="trailing" secondItem="aLL-36-oQD" secondAttribute="trailing" id="Hft-XN-0TP"/>
+                            <constraint firstItem="kf8-Yr-35M" firstAttribute="top" secondItem="aLL-36-oQD" secondAttribute="bottom" id="JXQ-S5-ecF"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="內文" id="dkN-nd-ceg"/>
                     <connections>
-                        <outlet property="chapterContentText" destination="vGb-cn-Wr0" id="qfj-jd-NBu"/>
+                        <outlet property="chapterContentText" destination="aLL-36-oQD" id="KqV-ge-oR7"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4ID-yc-iha" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="24X-4e-4Y9">
-                    <connections>
-                        <action selector="returnToChapter:" destination="D3C-YP-6ZT" id="Cma-3N-Hh5"/>
-                        <segue destination="xdE-6P-leS" kind="custom" identifier="showChapterContentUnwind" customClass="ChapterContentUnwindSegue" customModule="WebReader" customModuleProvider="target" id="QhH-u4-aJl"/>
-                    </connections>
-                </swipeGestureRecognizer>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VdY-TN-FCS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1797.5999999999999" y="-18.440779610194905"/>
+            <point key="canvasLocation" x="1182" y="778"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Dlw-RF-6K6">
+            <objects>
+                <navigationController id="EcH-RQ-qbg" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dBa-Zo-Glg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="3dM-re-ZuC" kind="relationship" relationship="rootViewController" id="vs4-2W-QvV"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fMP-co-w8o" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1422" y="780"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="QhH-u4-aJl"/>
-    </inferredMetricsTieBreakers>
 </document>
