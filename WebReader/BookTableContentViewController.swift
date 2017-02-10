@@ -14,7 +14,18 @@ class BookTableContentViewController: UITableViewController {
     var bookInfo : Book!
     var chapters: [chapterTuple] = []
     var selectedChapter: NSString!
+    var selectedChapterTitle: String!
     
+    func refresh(sender: AnyObject) {
+        print("refreshing table")
+        getBookChapterList(url: bookInfo.bookUrl){ chapterInfo in
+            self.chapters = chapterInfo
+            self.chapterListTable.reloadData()
+            print("refreshed")
+            self.refreshControl?.endRefreshing()
+            
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +36,7 @@ class BookTableContentViewController: UITableViewController {
             self.chapters = chapterInfo
             self.chapterListTable.reloadData()
         }
-        
+        self.refreshControl?.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -39,6 +50,7 @@ class BookTableContentViewController: UITableViewController {
             let secondViewController = segue.destination as! BookContentViewController
             secondViewController.chapterUrl = selectedChapter
             secondViewController.selectedBook = bookInfo
+            secondViewController.chapterTitle = selectedChapterTitle
             
         }
     }
@@ -51,12 +63,10 @@ class BookTableContentViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return chapters.count
     }
     
@@ -64,6 +74,7 @@ class BookTableContentViewController: UITableViewController {
         print("Table content:::You clicked me at \(indexPath.row)")
         
         selectedChapter = chapters[chapters.count - indexPath.row - 1].url as NSString!
+        selectedChapterTitle = chapters[chapters.count - indexPath.row - 1].text
         self.performSegue(withIdentifier: "showChapterContentSegue", sender: self)
         
     }
@@ -75,16 +86,14 @@ class BookTableContentViewController: UITableViewController {
         
         let cell: UITableViewCell
         let chapterTitle = chapters[chapters.count - indexPath.row - 1].text
-        //let chapterUrl = chapters[indexPath.row].url
         
         cell = tableView.dequeueReusableCell(withIdentifier: "chapterTitleCell", for: indexPath)
-        //let titleData = books[indexPath.row].bookTitle
-        //cell = tableView.dequeueReusableCell(withIdentifier: "bookTitleCell", for: indexPath)
         
         cell.textLabel?.text = chapterTitle
         return cell
         
     }
+
     
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

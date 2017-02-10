@@ -41,7 +41,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rIJ-cy-nYS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-471" y="780"/>
+            <point key="canvasLocation" x="-514" y="-7"/>
         </scene>
         <!--目錄-->
         <scene sceneID="IOW-be-J2M">
@@ -56,11 +56,11 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8ON-yd-cGg" id="Z7W-Qb-1LY">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="K14-iQ-cN6">
-                                            <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
+                                            <rect key="frame" x="15" y="0.0" width="345" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
                                             <nil key="textColor"/>
@@ -76,6 +76,17 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="目錄" id="63O-Us-Vrg"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="BcA-GV-bn6">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle">
+                            <fragment content="重載章節中">
+                                <attributes>
+                                    <font key="NSFont" size="14" name="HannotateTC-W5"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </refreshControl>
                     <connections>
                         <outlet property="chapterListTable" destination="kA8-hG-Ot0" id="PbJ-Yb-SSH"/>
                         <segue destination="6xo-U5-p8c" kind="show" identifier="showChapterContentSegue" id="WxI-L0-PYF"/>
@@ -83,12 +94,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jc2-LP-sIQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="348" y="779"/>
+            <point key="canvasLocation" x="519" y="-8"/>
         </scene>
-        <!--內文-->
+        <!--Content-->
         <scene sceneID="InT-xu-6Ah">
             <objects>
-                <viewController id="6xo-U5-p8c" customClass="BookContentViewController" customModule="WebReader" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Content" title="Content" id="6xo-U5-p8c" customClass="BookContentViewController" customModule="WebReader" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EEd-H9-F75"/>
                         <viewControllerLayoutGuide type="bottom" id="kf8-Yr-35M"/>
@@ -97,12 +108,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="aLL-36-oQD">
-                                <rect key="frame" x="0.0" y="65" width="375" height="603"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="aLL-36-oQD">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" notEnabled="YES"/>
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="1S1-zA-Doh" appends="YES" id="tHf-d2-oNC"/>
+                                    <outletCollection property="gestureRecognizers" destination="onp-VW-d89" appends="YES" id="dYZ-po-Rlm"/>
+                                    <outletCollection property="gestureRecognizers" destination="POQ-NH-Xkb" appends="YES" id="bOh-OO-akz"/>
+                                </connections>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -119,8 +139,23 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VdY-TN-FCS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer cancelsTouchesInView="NO" numberOfTapsRequired="2" id="1S1-zA-Doh">
+                    <connections>
+                        <action selector="doubleTapAction:" destination="6xo-U5-p8c" id="oEV-NE-0MU"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="onp-VW-d89">
+                    <connections>
+                        <action selector="handleSwipeGesture:" destination="6xo-U5-p8c" id="xAe-dk-bk4"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="right" id="POQ-NH-Xkb">
+                    <connections>
+                        <action selector="swipeBackGesture:" destination="6xo-U5-p8c" id="rbF-kg-x6V"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1182" y="778"/>
+            <point key="canvasLocation" x="1601" y="-8"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Dlw-RF-6K6">
@@ -130,13 +165,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="JHh-kI-mDR">
+                        <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="3dM-re-ZuC" kind="relationship" relationship="rootViewController" id="vs4-2W-QvV"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fMP-co-w8o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1422" y="780"/>
+            <point key="canvasLocation" x="-1678" y="-7"/>
         </scene>
     </scenes>
 </document>

@@ -18,13 +18,15 @@ class HomeTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("in home table view")
+        
         BookListTable.estimatedRowHeight = 88
         //BookListTable.separatorColor = UIColor.clear
         BookListTable.separatorStyle = UITableViewCellSeparatorStyle.none
         //BookListTable.rowHeight = UITableViewAutomaticDimension
+        
         books.append(UUBook(bookUrl: "http://sj.uukanshu.com/book.aspx?id=39314"))
         books.append(UUBook(bookUrl: "http://sj.uukanshu.com/book.aspx?id=48319"))
-        //book[0].printBookInfo()
+        
         for book in books {
             book.setBookInfo(){ bookName in
                 self.BookListTable.reloadData()
@@ -55,12 +57,10 @@ class HomeTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You clicked me at \(indexPath.row)")
-        //let destinationVC = TableContentViewController()
         selectedBook = books[indexPath.row]
-        //destinationVC.message = "\(indexPath.row)" as NSString!
+        
         self.performSegue(withIdentifier: "showChapterListsSegue", sender: self)
         
-        //self.performSegueWithIdentifier("idFirstSegue", sender: self)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -76,10 +76,10 @@ class HomeTableViewController: UITableViewController {
         cell = tableView.dequeueReusableCell(withIdentifier: "bookTitleCell", for: indexPath)
         
         (cell as! BookTitleCell).textLabel?.text = titleData
-        (cell as! BookTitleCell).detailTextLabel?.text = "Author: 作者"
+        //(cell as! BookTitleCell).detailTextLabel?.text = "Author: 作者"
         (cell as! BookTitleCell).imageView?.image = UIImage(named: "test2.jpg")
-        //(cell as! BookTitleCell).bookTitleButton.setTitle(titleData, for: .normal)
-        //print(titleData)
+        
+        //var url:NSURL = NSURL(string:"http://img.uukanshu.net/fengmian/2016/4/635965541375948990.jpg")!
         
         return cell
     }

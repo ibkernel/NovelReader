@@ -31,8 +31,6 @@ class Book {
     
 }
 
-
-
 class UUBook: Book {
     
     override func setBookInfo(completion: @escaping (String) -> Void) {
@@ -42,7 +40,7 @@ class UUBook: Book {
                 if let doc = Kanna.HTML(html: utf8Text, encoding: .utf8) {
                     if let bookname = doc.at_css("dl dt"){
                         
-                        self.bookTitle = bookname.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                        self.bookTitle = s2t(text: bookname.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
                         completion(self.bookTitle!)
                     }
                 }
@@ -50,7 +48,7 @@ class UUBook: Book {
         }
         
     }
-    
+
     override func printBookInfo() {
         print("\(self.bookTitle), \(self.bookUrl)")
     }
@@ -68,37 +66,17 @@ enum Urls: String {
     static var count: Int { return Urls.book2.hashValue + 1}
 }
 
-var BookTitles: [String] = [
-    "書名1","書名2"
-]
 
 var url = NSURL(string: Urls.book1.rawValue)
-//var domain = url!.host + "/"
 var domain:String? = (url?.host)! + "/"
-var n:String? = "read.aspx?tid=39314&sid=145510"
-
-
 var NonSense: [String] = [
     "(adsbygoogle = window.adsbygoogle || []).push({});", "章节缺失、错误举报", "U","看书","请记住本书首发域名",
     "言情小说网手机版阅读网址：","手机版阅读网址：", "：。"
 ]
-
-func getBookTitle(completionHandler: @escaping (String) ->()){
-    //var bookTitle: String?;
-    Alamofire.request(Urls.book1.rawValue).response { response in
-
-        if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-            if let doc = Kanna.HTML(html: utf8Text, encoding: .utf8) {
-                if let bookname = doc.at_css("dl dt"){
-                    let bookNameT = convertToTraditional(text:bookname.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))!
-                    completionHandler(bookNameT)
-                }
-            }
-        }
-    }
-    
-}
 typealias chapterTuple = (text: String?, url: String?)
+
+
+
 
 func getBookChapterList(url: String, completionHandler: @escaping ([chapterTuple]) -> () ){
     
@@ -109,8 +87,7 @@ func getBookChapterList(url: String, completionHandler: @escaping ([chapterTuple
         if let data = response.data, let utf8Text = String(data:data, encoding: .utf8) {
             if let doc = Kanna.HTML(html: utf8Text, encoding: .utf8) {
                 for link in doc.xpath("//div[contains(@class, 'ml-list')] // a") {
-                    chapterInfo = (text:convertToTraditional(text:link.text!), url:link["href"]!)
-                    //chapterInfo = (text:link.text!, url:link["href"]!)
+                    chapterInfo = (text:s2t(text:link.text!), url:link["href"]!)
                     chapterList.append(chapterInfo)
                 }
                 completionHandler(chapterList)
@@ -119,11 +96,27 @@ func getBookChapterList(url: String, completionHandler: @escaping ([chapterTuple
     }
 }
 
-func getChapterContent(url: String, completionHandler: @escaping (String) -> ()){
+func getBookTitle(completionHandler: @escaping (String) ->()){
+    //var bookTitle: String?;
+    Alamofire.request(Urls.book1.rawValue).response { response in
+        
+        if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+            if let doc = Kanna.HTML(html: utf8Text, encoding: .utf8) {
+                if let bookname = doc.at_css("dl dt"){
+                    let bookNameT = s2t(text:bookname.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))!
+                    completionHandler(bookNameT)
+                }
+            }
+        }
+    }
+    
+}
+func getChapterContent(url: String, completionHandler: @escaping (String, String, String?) -> ()){
     
     var contentText: String = ""
     let fullUrl = "http://" + domain! + url
-    
+    var nextUrl: String?
+    var chapterTitle: String!
     
     Alamofire.request(fullUrl).response{ response in
         if let data = response.data, var utf8Text = String(data:data, encoding: .utf8){
@@ -134,9 +127,18 @@ func getChapterContent(url: String, completionHandler: @escaping (String) -> ())
             utf8Text = utf8Text.replacingOccurrences(of: "<p/>", with: "\n")
             if let doc = Kanna.HTML(html: utf8Text, encoding: .utf8) {
                 
+                for txt in doc.xpath("//h3"){
+                    chapterTitle = txt.text
+                }
+                
+                contentText = s2t(text: chapterTitle)! + "\n"
                 
                 for content in doc.xpath("//div[contains(@id, 'bookContent')]") {
                     contentText += content.text!
+                }
+                
+                for url in doc.xpath("//div[contains(@class, 'rp-switch')] //a[contains(@id, 'read_next')]") {
+                    nextUrl = url["href"]
                 }
                 /*
                 // This method sucks, too many uncertainties
@@ -163,16 +165,14 @@ func getChapterContent(url: String, completionHandler: @escaping (String) -> ())
                     
                 }
                 */
-                //contentText = contentText.replacingOccurrences(of: "“", with: "“")
+
                 
                 // Compare time with the replacing function inside the above for-loop
                 for words in NonSense {
                     contentText = contentText.replacingOccurrences(of: words, with: "")
                 }
-
-                contentText = convertToTraditional(text:contentText)!
-
-                completionHandler(contentText)
+                contentText = s2t(text: contentText)!
+                completionHandler(contentText, chapterTitle, nextUrl)
             }
             
         }
@@ -180,60 +180,3 @@ func getChapterContent(url: String, completionHandler: @escaping (String) -> ())
     }
     
 }
-
-/*
-
-func getPureContent() -> Void {
-    Alamofire.request(Urls.book1.rawValue).response { response in
-//        print("Request: \(response.request)")
-//        print("Response: \(response.response)")
-//        print("Error: \(response.error)")
-
-        if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-            if let doc = Kanna.HTML(html: utf8Text, encoding: .utf8) {
-                //print(doc.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
-                if let bookname = doc.at_css("dl dt"){
-                    print(bookname.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
-                }
-                
-                // Search for nodes by XPath
-                for link in doc.xpath("//div[contains(@class, 'ml-list')] // a") {
-                    print(link.text!)
-                    //print(link["href"]!)
-                }
-                print(domain!)
-            }
-        }
-    }
-    
-    let a = "http://"+domain!+"read.aspx?tid=39314&sid=145510"
-    
-    Alamofire.request(a).response { response in
-        print("\(response.request)")
-        print("\(response.data)")
-        
-        if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-            var refinedText = utf8Text
-            for words in NonSense {
-                refinedText = refinedText.replacingOccurrences(of: words, with: "")
-            }
-            if let doc = Kanna.HTML(html: refinedText, encoding: .utf8) {
-                //print(doc.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
-                var rawChapterContent: String = ""
-                //print(doc.text!)
-                //var refinedChapterContent: String = ""
-                // Search for nodes by XPath
-                
-                for content in doc.xpath("//div[contains(@id, 'bookContent')]") {
-                    rawChapterContent += content.text!
-                }
-                //for words in NonSense {
-                //    rawChapterContent = rawChapterContent.replacingOccurrences(of: words, with: "")
-                //}
-                print(rawChapterContent)
-            }
-        }
-    }
-}
- 
- */
