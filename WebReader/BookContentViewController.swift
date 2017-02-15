@@ -11,37 +11,47 @@ import UIKit
 class BookContentViewController: UIViewController {
 
     @IBOutlet weak var chapterContentText: UITextView!
+    var domain : String!
     var chapterUrl : NSString!
     var bookInfo : Book!
     var selectedBook: Book!
     var nextUrl: NSString?
     var chapterTitle: String!
+    var preprocessContent: String?
+    var preprocessTitle: String?
+    var preprocessUrl: NSString?
     //var nextChapterTitle: String!
     
 
     override func viewWillAppear(_ animated: Bool) {
+        print("view will appear")
         self.navigationController?.isNavigationBarHidden = true
         super.viewWillAppear(animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = false
-        super.viewWillDisappear(animated)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+        
+        
         if let t = chapterTitle {
             self.navigationItem.title = s2t(text: t)
         }
-        //self.navigationController?.interactivePopGestureRecognizer?.addTarget(self, action: #selector(self.handleSwipeGesture))
-        //self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         chapterContentText.isEditable = false
-        chapterContentText.backgroundColor = UIColor.black
-        chapterContentText.textColor = UIColor.white
-        chapterContentText.font = UIFont(name: (chapterContentText?.font?.fontName)!, size: 24)
+        chapterContentText.backgroundColor = UserDefaults.standard.bool(forKey: "isNightMode") ? UIColor.black : UIColor.white
+        switch UserDefaults.standard.string(forKey: "FontColor") {
+        case "white"?:
+            chapterContentText.textColor = UIColor.white
+            break
+        case "black"?:
+            chapterContentText.textColor = UIColor.black
+            break
+        case "gray"?:
+            chapterContentText.textColor = UIColor.gray
+            break
+        default:
+            chapterContentText.textColor = UIColor.white
+        }
+        
+        
+        chapterContentText.font = UIFont(name: (chapterContentText?.font?.fontName)!, size: CGFloat(UserDefaults.standard.integer(forKey: "FontSize")))
         // Do any additional setup after loading the view.
-
+        
         let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView.init(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
         activityIndicator.alpha = 1.0
         self.view.addSubview(activityIndicator)
@@ -51,24 +61,51 @@ class BookContentViewController: UIViewController {
         self.navigationItem.hidesBackButton = true
         let newBackButton = UIBarButtonItem(title: "回目錄", style: UIBarButtonItemStyle.done, target: self, action: #selector(BookContentViewController.returnToChapterList(sender:)))
         self.navigationItem.leftBarButtonItem = newBackButton
-        
+        let optionButton = UIBarButtonItem(title: "設定", style: UIBarButtonItemStyle.done, target: self, action: #selector(BookContentViewController.goToOption(sender:)))
+        self.navigationItem.rightBarButtonItem = optionButton
         let methodStart = Date()
         print("Starting: \(methodStart)");
         
         // TODO learn Dispatch
-        
-        getChapterContent(url: chapterUrl as String){ content, title, url in
+        if(self.preprocessContent == nil){
+            getChapterContent(url: chapterUrl as String, domain: domain){ content, title, url in
+                activityIndicator.stopAnimating()
+                self.chapterContentText.text = content
+                self.navigationItem.title = title
+                self.nextUrl = url as? NSString
+                self.chapterTitle = title
+                let methodFinish = Date()
+                let executionTime = methodFinish.timeIntervalSince(methodStart)
+                print("Execution time: \(executionTime)")
+            }
+        }else {
             activityIndicator.stopAnimating()
-            self.chapterContentText.text = content
-            self.navigationItem.title = title
-            self.nextUrl = url as? NSString
-            self.chapterTitle = title
-            let methodFinish = Date()
-            let executionTime = methodFinish.timeIntervalSince(methodStart)
-            print("Execution time: \(executionTime)")
+            self.chapterContentText.text = self.preprocessContent
+            self.navigationItem.title = self.preprocessTitle
+            self.chapterTitle = self.preprocessTitle
+            self.nextUrl = self.preprocessUrl
+            
         }
-        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
+        super.viewWillDisappear(animated)
+    }
+    
+    override func viewDidLoad() {
+        print("view did load")
+        super.viewDidLoad()
+
         // Do any additional setup after loading the view.
+    }
+
+    func goToOption(sender: UIBarButtonItem) {
+        print("In goToOption")
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "OptionMenu") as! OptionMenuTableViewController
+        navigationController?.pushViewController(vc,animated: true)
+        
     }
     
     func returnToChapterList(sender: UIBarButtonItem) {
@@ -87,9 +124,21 @@ class BookContentViewController: UIViewController {
         }
     }
     
-    
     override func viewDidAppear(_ animated: Bool) {
         print("view appearred")
+        self.preprocessContent = nil
+        
+        if (self.nextUrl != nil) {
+            getChapterContent(url: self.nextUrl as! String, domain: domain){ content, title, url in
+                self.preprocessContent = content
+                self.preprocessTitle = title
+                self.preprocessUrl = url as? NSString
+                //self.chapterTitle = title
+                print("calculated: "+title)
+            }
+        }
+
+    
     }
     
     @IBAction func doubleTapAction(_ sender: Any) {
@@ -108,7 +157,10 @@ class BookContentViewController: UIViewController {
             let controller = storyboard.instantiateViewController(withIdentifier: viewControllerID) as! BookContentViewController
             controller.chapterUrl = self.nextUrl
             controller.selectedBook = self.bookInfo
-            //controller.chapterTitle = self.nextChapterTitle
+            controller.preprocessTitle = self.preprocessTitle
+            controller.preprocessContent = self.preprocessContent
+            controller.preprocessUrl = self.preprocessUrl
+            controller.domain = self.domain
             let segue = UIStoryboardSegue(identifier: "NextChapterSegue", source: self, destination: controller, performHandler: {self.navigationController?.show( controller, sender: self)})
             segue.perform()
         } else {

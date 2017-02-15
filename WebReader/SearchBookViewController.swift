@@ -1,43 +1,24 @@
 //
-//  BookTableContentViewController.swift
+//  SearchBookViewController2.swift
 //  WebReader
 //
-//  Created by Wayne Chang on 2017/2/6.
+//  Created by Wayne Chang on 2017/2/12.
 //  Copyright © 2017年 WayneChang. All rights reserved.
 //
 
 import UIKit
 
-class BookTableContentViewController: UITableViewController {
+class SearchBookViewController: UITableViewController, UISearchBarDelegate {
 
-    @IBOutlet var chapterListTable: UITableView!
-    var bookInfo : Book!
-    var chapters: [chapterTuple] = []
-    var selectedChapter: NSString!
-    var selectedChapterTitle: String!
-    var domain: String!
+    @IBOutlet weak var SearchBar: UISearchBar!
     
-    func refresh(sender: AnyObject) {
-        print("refreshing table")
-        getBookChapterList(url: bookInfo.bookUrl, domain: self.domain){ chapterInfo in
-            self.chapters = chapterInfo
-            self.chapterListTable.reloadData()
-            print("refreshed")
-            self.refreshControl?.endRefreshing()
-            
-        }
-    }
+    var url1 = "https://cse.google.com/cse?cx=008945028460834109019%3Akn_kwux2xms&q=no#gsc.tab=0&gsc.q="
+    var url2 = "&gsc.sort="
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("In tableContentView")
-        print("message sent from previous controller: \(bookInfo.bookUrl)")
-
-        getBookChapterList(url: bookInfo.bookUrl, domain: self.domain){ chapterInfo in
-            self.chapters = chapterInfo
-            self.chapterListTable.reloadData()
-        }
-        self.refreshControl?.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
+        SearchBar.placeholder = "搜尋書名"
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -45,21 +26,7 @@ class BookTableContentViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-    
-    
 
-    
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showChapterContentSegue" {
-            let secondViewController = segue.destination as! BookContentViewController
-            secondViewController.chapterUrl = selectedChapter
-            secondViewController.selectedBook = bookInfo
-            secondViewController.chapterTitle = selectedChapterTitle
-            secondViewController.domain = domain
-        }
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -68,37 +35,36 @@ class BookTableContentViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        // #warning Incomplete implementation, return the number of sections
+        return 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chapters.count
+        // #warning Incomplete implementation, return the number of rows
+        return 0
+    }
+
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        print("user submitting")
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Table content:::You clicked me at \(indexPath.row)")
-        
-        selectedChapter = chapters[chapters.count - indexPath.row - 1].url as NSString!
-        selectedChapterTitle = chapters[chapters.count - indexPath.row - 1].text
-        self.performSegue(withIdentifier: "showChapterContentSegue", sender: self)
-        
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        self.chapterListTable.rowHeight = 44
-        
-        
-        let cell: UITableViewCell
-        let chapterTitle = chapters[chapters.count - indexPath.row - 1].text
-        
-        cell = tableView.dequeueReusableCell(withIdentifier: "chapterTitleCell", for: indexPath)
-        
-        cell.textLabel?.text = chapterTitle
-        return cell
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print("!User submitted")
+//        print(SearchBar.text!)
+//        if let encoded = SearchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed){
+//            let url = url1 + encoded + url2
+//            getBookList(url:url)
+//        }
+        getBookList(url: "https://cse.google.com/cse?cx=008945028460834109019%3Akn_kwux2xms&q=%E7%BE%8E%E9%A3%9F%E4%BE%9B%E5%BA%94%E5%95%86#gsc.tab=0&gsc.q=%E7%BE%8E%E9%A3%9F%E4%BE%9B%E5%BA%94%E5%95%86&gsc.page=1")
         
     }
-
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        print("User submitted")
+        //print(SearchBar.text!)
+    }
+    
+    
     
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -156,3 +122,5 @@ class BookTableContentViewController: UITableViewController {
     */
 
 }
+
+

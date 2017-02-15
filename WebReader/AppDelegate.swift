@@ -22,6 +22,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         for i in (s.characters.indices) {
             s2tTable[s[i]] = t[i]
         }
+        
+        let defaults = UserDefaults.standard
+        if defaults.value(forKey: "FontSize") == nil {
+            defaults.set(18, forKey: "FontSize")
+            defaults.set("white", forKey: "FontColor")
+            defaults.set(true, forKey: "isNightMode")
+            defaults.set("true", forKey: "isTraditional")
+            defaults.set(22, forKey:"reminderTime")
+            print("First time setup")
+        }else {
+            print("You have already launch the app before.")
+            print(defaults.string(forKey: "FontColor")!)
+            print(defaults.bool(forKey: "isNightMode"))
+        }
+        
         return true
     }
 

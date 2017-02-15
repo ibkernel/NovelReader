@@ -13,22 +13,28 @@ class HomeTableViewController: UITableViewController {
     @IBOutlet var BookListTable: UITableView!
     var books: [Book] = [Book]()
     var selectedBook: Book!
+    var selectedDomain: String!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("in home table view")
+        let searchBookButton = UIBarButtonItem(title: "搜尋", style: UIBarButtonItemStyle.done, target: self, action: #selector(HomeTableViewController.goToSearch(sender:)))
+        self.navigationItem.rightBarButtonItem = searchBookButton
+        
         
         BookListTable.estimatedRowHeight = 88
         //BookListTable.separatorColor = UIColor.clear
         BookListTable.separatorStyle = UITableViewCellSeparatorStyle.none
         //BookListTable.rowHeight = UITableViewAutomaticDimension
         
+        
+        // change to coredata -> store bookurl ,book name 
         books.append(UUBook(bookUrl: "http://sj.uukanshu.com/book.aspx?id=39314"))
         books.append(UUBook(bookUrl: "http://sj.uukanshu.com/book.aspx?id=48319"))
         
         for book in books {
-            book.setBookInfo(){ bookName in
+            book.setBookInfo(){ bookName in // return Book name
                 self.BookListTable.reloadData()
             }
         }
@@ -40,11 +46,20 @@ class HomeTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
+
+    func goToSearch(sender: UIBarButtonItem) {
+        print("In goToSearch")
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "SearchBook") as! SearchBookViewController
+        navigationController?.pushViewController(vc,animated: true)
+        
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showChapterListsSegue" {
             let secondViewController = segue.destination as! BookTableContentViewController
             secondViewController.bookInfo = selectedBook
+            secondViewController.domain = selectedDomain
         }
     }
     
@@ -58,6 +73,7 @@ class HomeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You clicked me at \(indexPath.row)")
         selectedBook = books[indexPath.row]
+        selectedDomain = books[indexPath.row].domain
         
         self.performSegue(withIdentifier: "showChapterListsSegue", sender: self)
         
@@ -77,15 +93,16 @@ class HomeTableViewController: UITableViewController {
         
         (cell as! BookTitleCell).textLabel?.text = titleData
         //(cell as! BookTitleCell).detailTextLabel?.text = "Author: 作者"
-        (cell as! BookTitleCell).imageView?.image = UIImage(named: "test2.jpg")
-        
-        //var url:NSURL = NSURL(string:"http://img.uukanshu.net/fengmian/2016/4/635965541375948990.jpg")!
+        (cell as! BookTitleCell).imageView?.image = UIImage(named: "book.png")
+        // Not working
+        //(cell as! BookTitleCell).imageView?.transform = CGAffineTransform(scaleX: 5,y: 5)
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Urls.count
+        //return core data book count
+        return 2
     }
     
     /*
