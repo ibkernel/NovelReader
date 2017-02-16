@@ -13,6 +13,8 @@
 		B043380A1E5038F700FFC217 /* SwitcherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04338091E5038F700FFC217 /* SwitcherTableViewCell.swift */; };
 		B043380C1E508AAB00FFC217 /* book.png in Resources */ = {isa = PBXBuildFile; fileRef = B043380B1E508AAB00FFC217 /* book.png */; };
 		B04338141E50B59800FFC217 /* SearchBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04338131E50B59800FFC217 /* SearchBookViewController.swift */; };
+		B07490881E54905C001A9989 /* BookList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07490861E54905C001A9989 /* BookList+CoreDataClass.swift */; };
+		B07490891E54905C001A9989 /* BookList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07490871E54905C001A9989 /* BookList+CoreDataProperties.swift */; };
 		B0A5644F1E42FF3F009EC182 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A5644E1E42FF3F009EC182 /* AppDelegate.swift */; };
 		B0A564541E42FF3F009EC182 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0A564521E42FF3F009EC182 /* Main.storyboard */; };
 		B0A564571E42FF3F009EC182 /* WebReader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B0A564551E42FF3F009EC182 /* WebReader.xcdatamodeld */; };
@@ -129,6 +131,8 @@
 		B04338091E5038F700FFC217 /* SwitcherTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitcherTableViewCell.swift; sourceTree = "<group>"; };
 		B043380B1E508AAB00FFC217 /* book.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = book.png; sourceTree = "<group>"; };
 		B04338131E50B59800FFC217 /* SearchBookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBookViewController.swift; sourceTree = "<group>"; };
+		B07490861E54905C001A9989 /* BookList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "BookList+CoreDataClass.swift"; path = "WebReader/BookList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		B07490871E54905C001A9989 /* BookList+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "BookList+CoreDataProperties.swift"; path = "WebReader/BookList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B0A5644B1E42FF3F009EC182 /* WebReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0A5644E1E42FF3F009EC182 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B0A564531E42FF3F009EC182 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -167,6 +171,8 @@
 		B0A564421E42FF3E009EC182 = {
 			isa = PBXGroup;
 			children = (
+				B07490861E54905C001A9989 /* BookList+CoreDataClass.swift */,
+				B07490871E54905C001A9989 /* BookList+CoreDataProperties.swift */,
 				B0A564921E4306FC009EC182 /* Kanna.framework */,
 				B0A564861E4305D5009EC182 /* Kanna.xcodeproj */,
 				B0A564631E42FF87009EC182 /* Alamofire.xcodeproj */,
@@ -409,12 +415,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0A564961E441DD2009EC182 /* BookTitleCell.swift in Sources */,
+				B07490881E54905C001A9989 /* BookList+CoreDataClass.swift in Sources */,
 				B0DB09AE1E4701C70021C0DF /* ChapterContentSegue.swift in Sources */,
 				B04338041E50184200FFC217 /* Options.swift in Sources */,
 				B0A564571E42FF3F009EC182 /* WebReader.xcdatamodeld in Sources */,
 				B04338141E50B59800FFC217 /* SearchBookViewController.swift in Sources */,
 				B0DB09B61E4825730021C0DF /* HomeTableViewController.swift in Sources */,
 				B0DB09B21E476C440021C0DF /* sttConverter.swift in Sources */,
+				B07490891E54905C001A9989 /* BookList+CoreDataProperties.swift in Sources */,
 				B043380A1E5038F700FFC217 /* SwitcherTableViewCell.swift in Sources */,
 				B0DB09AC1E46EF790021C0DF /* ChapterTitleCell.swift in Sources */,
 				B0DB09BA1E482AF70021C0DF /* BookTableContentViewController.swift in Sources */,

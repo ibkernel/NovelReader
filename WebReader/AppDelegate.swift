@@ -30,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             defaults.set(true, forKey: "isNightMode")
             defaults.set("true", forKey: "isTraditional")
             defaults.set(22, forKey:"reminderTime")
+            defaults.set("false", forKey: "isReverseChapterList")
             print("First time setup")
         }else {
             print("You have already launch the app before.")
@@ -66,6 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Core Data stack
 
+    
     lazy var persistentContainer: NSPersistentContainer = {
         /*
          The persistent container for the application. This implementation

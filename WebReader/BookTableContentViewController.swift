@@ -15,11 +15,11 @@ class BookTableContentViewController: UITableViewController {
     var chapters: [chapterTuple] = []
     var selectedChapter: NSString!
     var selectedChapterTitle: String!
-    var domain: String!
+    //var domain: String!
     
     func refresh(sender: AnyObject) {
         print("refreshing table")
-        getBookChapterList(url: bookInfo.bookUrl, domain: self.domain){ chapterInfo in
+        bookInfo.getBookChapterList(url: bookInfo.bookUrl){ chapterInfo in
             self.chapters = chapterInfo
             self.chapterListTable.reloadData()
             print("refreshed")
@@ -33,7 +33,7 @@ class BookTableContentViewController: UITableViewController {
         print("In tableContentView")
         print("message sent from previous controller: \(bookInfo.bookUrl)")
 
-        getBookChapterList(url: bookInfo.bookUrl, domain: self.domain){ chapterInfo in
+        bookInfo.getBookChapterList(url: bookInfo.bookUrl){ chapterInfo in
             self.chapters = chapterInfo
             self.chapterListTable.reloadData()
         }
@@ -46,17 +46,17 @@ class BookTableContentViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-    
-
-    
+    override func viewWillAppear(_ animated: Bool) {
+        self.chapterListTable.reloadData()
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showChapterContentSegue" {
             let secondViewController = segue.destination as! BookContentViewController
             secondViewController.chapterUrl = selectedChapter
-            secondViewController.selectedBook = bookInfo
+            secondViewController.bookInfo = bookInfo
             secondViewController.chapterTitle = selectedChapterTitle
-            secondViewController.domain = domain
+            //secondViewController.domain = domain
         }
     }
     
@@ -77,9 +77,14 @@ class BookTableContentViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Table content:::You clicked me at \(indexPath.row)")
+        if (UserDefaults.standard.bool(forKey: "isReverseChapterList")) {
+            selectedChapter = chapters[chapters.count - indexPath.row - 1].url as NSString!
+            selectedChapterTitle = chapters[chapters.count - indexPath.row - 1].text
+        }else {
+            selectedChapter = chapters[indexPath.row].url as NSString!
+            selectedChapterTitle = chapters[indexPath.row].text
+        }
         
-        selectedChapter = chapters[chapters.count - indexPath.row - 1].url as NSString!
-        selectedChapterTitle = chapters[chapters.count - indexPath.row - 1].text
         self.performSegue(withIdentifier: "showChapterContentSegue", sender: self)
         
     }
@@ -87,11 +92,13 @@ class BookTableContentViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         self.chapterListTable.rowHeight = 44
-        
-        
         let cell: UITableViewCell
-        let chapterTitle = chapters[chapters.count - indexPath.row - 1].text
-        
+        var chapterTitle: String!
+        if (UserDefaults.standard.bool(forKey: "isReverseChapterList")) {
+            chapterTitle = chapters[chapters.count - indexPath.row - 1].text
+        }else {
+            chapterTitle = chapters[indexPath.row ].text
+        }
         cell = tableView.dequeueReusableCell(withIdentifier: "chapterTitleCell", for: indexPath)
         
         cell.textLabel?.text = chapterTitle

@@ -7,13 +7,15 @@
 //
 
 import UIKit
+import CoreData
 
 class HomeTableViewController: UITableViewController {
 
     @IBOutlet var BookListTable: UITableView!
     var books: [Book] = [Book]()
+    var bkList: [String] = []
     var selectedBook: Book!
-    var selectedDomain: String!
+    //var selectedDomain: String!
     
     
     override func viewDidLoad() {
@@ -22,23 +24,19 @@ class HomeTableViewController: UITableViewController {
         let searchBookButton = UIBarButtonItem(title: "搜尋", style: UIBarButtonItemStyle.done, target: self, action: #selector(HomeTableViewController.goToSearch(sender:)))
         self.navigationItem.rightBarButtonItem = searchBookButton
         
-        
         BookListTable.estimatedRowHeight = 88
         //BookListTable.separatorColor = UIColor.clear
         BookListTable.separatorStyle = UITableViewCellSeparatorStyle.none
-        //BookListTable.rowHeight = UITableViewAutomaticDimension
-        
+
+
+
         
         // change to coredata -> store bookurl ,book name 
-        books.append(UUBook(bookUrl: "http://sj.uukanshu.com/book.aspx?id=39314"))
-        books.append(UUBook(bookUrl: "http://sj.uukanshu.com/book.aspx?id=48319"))
-        
-        for book in books {
-            book.setBookInfo(){ bookName in // return Book name
-                self.BookListTable.reloadData()
-            }
-        }
-        
+//        books.append(UUBook(bookUrl: "http://sj.uukanshu.com/book.aspx?id=39314"))
+//        books.append(UUBook(bookUrl: "http://sj.uukanshu.com/book.aspx?id=48319"))
+//        books.append(DemoBook(bookUrl: "http://tw.hjwzw.com/Book/Chapter/24346"))
+//        
+
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -47,10 +45,41 @@ class HomeTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<BookList> = BookList.fetchRequest()
+        do {
+            let results = try context.fetch(fetchRequest)
+            print("num of results = \(results.count)")
+            if results.count > 0 {
+                for result in results as [NSManagedObject] {
+                    print("\(result.value(forKey:"bookTitle") as! String), \(result.value(forKey: "bookUrl") as! String)")
+                    
+                    if (bkList.contains(result.value(forKey: "bookTitle") as! String)){
+                        continue
+                    }else {
+                        books.append(DemoBook(bookUrl: result.value(forKey: "bookUrl") as! String, bookTitle: result.value(forKey: "bookTitle") as! String))
+                        bkList.append(result.value(forKey: "bookTitle") as! String)
+                    }
+                }
+            }
+        }catch {
+            print("Error : \(error)")
+        }
+        
+        self.BookListTable.reloadData()
+        
+//        for book in books {
+//            book.setBookInfo(){ bookName in // return Book name
+//            }
+//        }
+    }
+    
     func goToSearch(sender: UIBarButtonItem) {
         print("In goToSearch")
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "SearchBook") as! SearchBookViewController
+        vc.bkList = self.bkList
         navigationController?.pushViewController(vc,animated: true)
         
     }
@@ -59,7 +88,7 @@ class HomeTableViewController: UITableViewController {
         if segue.identifier == "showChapterListsSegue" {
             let secondViewController = segue.destination as! BookTableContentViewController
             secondViewController.bookInfo = selectedBook
-            secondViewController.domain = selectedDomain
+            //secondViewController.domain = selectedDomain
         }
     }
     
@@ -73,7 +102,7 @@ class HomeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You clicked me at \(indexPath.row)")
         selectedBook = books[indexPath.row]
-        selectedDomain = books[indexPath.row].domain
+        //selectedDomain = books[indexPath.row].domain
         
         self.performSegue(withIdentifier: "showChapterListsSegue", sender: self)
         
@@ -82,6 +111,36 @@ class HomeTableViewController: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
+            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+            let fetchRequest: NSFetchRequest<BookList> = BookList.fetchRequest()
+            do {
+                let results = try context.fetch(fetchRequest)
+                for result in results as [NSManagedObject] {
+                    print("\(result.value(forKey:"bookTitle") as! String), \(result.value(forKey: "bookUrl") as! String)")
+                    if (result.value(forKey: "bookUrl") as! String == books[indexPath.row].bookUrl){
+                        context.delete(result)
+                        books.remove(at: indexPath.row)
+                        self.BookListTable.reloadData()
+                        break
+                    }
+                }
+                
+            }catch {
+                print("Error : \(error)")
+            }
+            
+            
+        }
+    }
+
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -102,7 +161,7 @@ class HomeTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //return core data book count
-        return 2
+        return books.count
     }
     
     /*

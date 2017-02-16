@@ -7,17 +7,21 @@
 //
 
 import UIKit
+import CoreData
 
 class SearchBookViewController: UITableViewController, UISearchBarDelegate {
 
+    @IBOutlet var SearchListTable: UITableView!
     @IBOutlet weak var SearchBar: UISearchBar!
-    
-    var url1 = "https://cse.google.com/cse?cx=008945028460834109019%3Akn_kwux2xms&q=no#gsc.tab=0&gsc.q="
-    var url2 = "&gsc.sort="
+    var resultList: [chapterTuple] = []
+    var demoUrl = "http://t.hjwzw.com/List/"
+    var bkList: [String] = []
+    var previewBook : Book!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "線上搜尋"
         SearchBar.placeholder = "搜尋書名"
         
         // Uncomment the following line to preserve selection between presentations
@@ -36,12 +40,12 @@ class SearchBookViewController: UITableViewController, UISearchBarDelegate {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return resultList.count
     }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -49,14 +53,17 @@ class SearchBookViewController: UITableViewController, UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.SearchBar.endEditing(true)
         print("!User submitted")
-//        print(SearchBar.text!)
-//        if let encoded = SearchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed){
-//            let url = url1 + encoded + url2
-//            getBookList(url:url)
-//        }
-        getBookList(url: "https://cse.google.com/cse?cx=008945028460834109019%3Akn_kwux2xms&q=%E7%BE%8E%E9%A3%9F%E4%BE%9B%E5%BA%94%E5%95%86#gsc.tab=0&gsc.q=%E7%BE%8E%E9%A3%9F%E4%BE%9B%E5%BA%94%E5%95%86&gsc.page=1")
-        
+        print(SearchBar.text!)
+        if let encoded = SearchBar.text!.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed){
+            let url = demoUrl + encoded
+            getBookList(url:url){ BookInfo in
+                self.resultList = BookInfo
+                self.SearchListTable.reloadData()
+            }
+        }
+
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
@@ -64,26 +71,75 @@ class SearchBookViewController: UITableViewController, UISearchBarDelegate {
         //print(SearchBar.text!)
     }
     
+    // Add already-have checker
     
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        
+        if (bkList.contains(resultList[indexPath.row].text!) == false){
+            let favorite = UITableViewRowAction(style: .destructive, title: "加入最愛") { action, index in
+                let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                let myEntityName = "BookList"
+                let entity =  NSEntityDescription.entity(forEntityName: myEntityName, in: context)
+                let bk = NSManagedObject(entity: entity!, insertInto: context)
+                bk.setValue(self.resultList[indexPath.row].text, forKey: "bookTitle")
+                bk.setValue(self.resultList[indexPath.row].url, forKey: "bookUrl")
+                
+                //save the object
+                do {
+                    try context.save()
+                    print("saved!")
+                } catch let error as NSError  {
+                    print("Could not save \(error), \(error.userInfo)")
+                } catch {
+                    
+                }
+                let alert = UIAlertController(title: "Favorite", message: "已加入最愛", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .destructive))
+                self.present(alert, animated: true)
+                tableView.isEditing = false
+                self.bkList.append(self.resultList[indexPath.row].text!)
+            }
+            favorite.backgroundColor = UIColor(red: 255/255, green: 110/255, blue: 50/255, alpha: 1)
+            return [favorite]
+        }else {
+            let favorite = UITableViewRowAction(style: .destructive, title: "已加入最愛") { action, index in
+                tableView.isEditing = false
+            }
+            favorite.backgroundColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 1)
+            return [favorite]
+        }
+        
+    }
     
-    /*
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseCell", for: indexPath)
+        
+        cell.textLabel?.text = resultList[indexPath.row].text
 
         return cell
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("\(resultList[indexPath.row].text!), \(resultList[indexPath.row].url!)")
+        previewBook = DemoBook(bookUrl: resultList[indexPath.row].url!, bookTitle: resultList[indexPath.row].text!)
+        self.performSegue(withIdentifier: "previewChapterSegue", sender: self)
+        
     }
-    */
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "previewChapterSegue" {
+            let secondViewController = segue.destination as! BookTableContentViewController
+            secondViewController.bookInfo = previewBook
+            
+        }
+    }
+    
+    
     /*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {

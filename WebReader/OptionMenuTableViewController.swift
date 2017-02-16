@@ -19,11 +19,12 @@ class OptionMenuTableViewController: UITableViewController {
         
         let isNightMode: Bool! = UserDefaults.standard.bool(forKey: "isNightMode")
         let isTraditional: Bool! = UserDefaults.standard.bool(forKey: "isTraditional")
+        let isReverseChapterList: Bool! = UserDefaults.standard.bool(forKey: "isReverseChapterList")
         UserOptions[0].append(PickerOptions("字體顏色", fontColorOptions, keyName: "FontColor"))
         UserOptions[0].append(PickerOptions("字體大小", fontSizeOptions, keyName: "FontSize"))
         UserOptions[0].append(SwitcherOptions("轉成繁體", isTraditional, keyName: "isTraditional"))
         UserOptions[0].append(SwitcherOptions("夜間模式", isNightMode, keyName: "isNightMode"))
-        
+        UserOptions[0].append(SwitcherOptions("目錄倒序", isReverseChapterList, keyName: "isReverseChapterList"))
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

@@ -11,16 +11,14 @@ import UIKit
 class BookContentViewController: UIViewController {
 
     @IBOutlet weak var chapterContentText: UITextView!
-    var domain : String!
+    //var domain : String!
     var chapterUrl : NSString!
     var bookInfo : Book!
-    var selectedBook: Book!
     var nextUrl: NSString?
     var chapterTitle: String!
     var preprocessContent: String?
     var preprocessTitle: String?
     var preprocessUrl: NSString?
-    //var nextChapterTitle: String!
     
 
     override func viewWillAppear(_ animated: Bool) {
@@ -63,12 +61,14 @@ class BookContentViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = newBackButton
         let optionButton = UIBarButtonItem(title: "設定", style: UIBarButtonItemStyle.done, target: self, action: #selector(BookContentViewController.goToOption(sender:)))
         self.navigationItem.rightBarButtonItem = optionButton
+        
+        
         let methodStart = Date()
         print("Starting: \(methodStart)");
         
         // TODO learn Dispatch
         if(self.preprocessContent == nil){
-            getChapterContent(url: chapterUrl as String, domain: domain){ content, title, url in
+            bookInfo.getChapterContent(url: chapterUrl as String){ content, title, url in
                 activityIndicator.stopAnimating()
                 self.chapterContentText.text = content
                 self.navigationItem.title = title
@@ -90,6 +90,9 @@ class BookContentViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
+        self.preprocessUrl = nil
+        self.preprocessTitle = nil
+        self.preprocessContent = nil
         super.viewWillDisappear(animated)
     }
     
@@ -115,21 +118,14 @@ class BookContentViewController: UIViewController {
         //self.navigationController!.popToViewController(BookTableContentViewController() as! UIViewController, animated: true);
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showChapterContentSegue" {
-            //let secondViewController = segue.destination as! BookContentViewController
-            //secondViewController.chapterUrl = selectedChapter
-            //secondViewController.selectedBook = bookInfo
-            
-        }
-    }
     
+    // if viewWillAppear didn't finish fast, it won't calculate the next chapter
     override func viewDidAppear(_ animated: Bool) {
         print("view appearred")
         self.preprocessContent = nil
         
         if (self.nextUrl != nil) {
-            getChapterContent(url: self.nextUrl as! String, domain: domain){ content, title, url in
+            bookInfo.getChapterContent(url: self.nextUrl as! String){ content, title, url in
                 self.preprocessContent = content
                 self.preprocessTitle = title
                 self.preprocessUrl = url as? NSString
@@ -156,11 +152,11 @@ class BookContentViewController: UIViewController {
             let storyboard = UIStoryboard(name: storyboardName, bundle:nil)
             let controller = storyboard.instantiateViewController(withIdentifier: viewControllerID) as! BookContentViewController
             controller.chapterUrl = self.nextUrl
-            controller.selectedBook = self.bookInfo
+            controller.bookInfo = self.bookInfo
             controller.preprocessTitle = self.preprocessTitle
             controller.preprocessContent = self.preprocessContent
             controller.preprocessUrl = self.preprocessUrl
-            controller.domain = self.domain
+            //controller.domain = self.domain
             let segue = UIStoryboardSegue(identifier: "NextChapterSegue", source: self, destination: controller, performHandler: {self.navigationController?.show( controller, sender: self)})
             segue.perform()
         } else {
@@ -171,7 +167,7 @@ class BookContentViewController: UIViewController {
     }
     
     @IBAction func swipeBackGesture(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     override func didReceiveMemoryWarning() {

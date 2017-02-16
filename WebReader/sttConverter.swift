@@ -21,16 +21,23 @@ var s2tTable = [Character: Character]()
 
 // Ur the champ!!! Best performance
 func s2t(text: String?) -> String? {
-    var chars = Array(text!.characters)
-    var j = 0
-    for i in (text?.characters.indices)! {
-        if (s2tTable[text![i]] != nil){
-            chars[j] = s2tTable[text![i]]!
+    
+    let isTraditional: Bool! = UserDefaults.standard.bool(forKey: "isTraditional")
+    if (isTraditional == true){
+        var chars = Array(text!.characters)
+        var j = 0
+        for i in (text?.characters.indices)! {
+            if (s2tTable[text![i]] != nil){
+                chars[j] = s2tTable[text![i]]!
+            }
+            j += 1
         }
-        j += 1
-    }
-    let cvString = String(chars)
-    return cvString
+        let cvString = String(chars)
+        return cvString
+    }else {
+        return text
+    }    
+
 }
 
 

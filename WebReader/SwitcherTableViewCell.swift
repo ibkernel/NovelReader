@@ -26,6 +26,9 @@ class SwitcherTableViewCell: UITableViewCell {
             UserDefaults.standard.set(switchOption.isOn, forKey: switcherKey)
             switchOption.isOn ? UserDefaults.standard.set("white", forKey: "FontColor") : UserDefaults.standard.set("black", forKey: "FontColor")
             break
+        case "isReverseChapterList":
+            UserDefaults.standard.set(switchOption.isOn, forKey: switcherKey)
+            break
         default:
             print("do nothing")
         }
