@@ -26,7 +26,6 @@
 		B0A564931E4306FC009EC182 /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A564921E4306FC009EC182 /* Kanna.framework */; };
 		B0A564941E4306FC009EC182 /* Kanna.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B0A564921E4306FC009EC182 /* Kanna.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B0A564961E441DD2009EC182 /* BookTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A564951E441DD2009EC182 /* BookTitleCell.swift */; };
-		B0A5649C1E44411F009EC182 /* test2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0A5649B1E44411F009EC182 /* test2.jpg */; };
 		B0DB09AC1E46EF790021C0DF /* ChapterTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DB09AB1E46EF790021C0DF /* ChapterTitleCell.swift */; };
 		B0DB09AE1E4701C70021C0DF /* ChapterContentSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DB09AD1E4701C70021C0DF /* ChapterContentSegue.swift */; };
 		B0DB09B01E47025E0021C0DF /* ChapterContentUnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DB09AF1E47025E0021C0DF /* ChapterContentUnwindSegue.swift */; };
@@ -145,7 +144,6 @@
 		B0A564861E4305D5009EC182 /* Kanna.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Kanna.xcodeproj; path = Carthage/Checkouts/Kanna/Kanna.xcodeproj; sourceTree = "<group>"; };
 		B0A564921E4306FC009EC182 /* Kanna.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kanna.framework; path = Carthage/Build/iOS/Kanna.framework; sourceTree = "<group>"; };
 		B0A564951E441DD2009EC182 /* BookTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookTitleCell.swift; sourceTree = "<group>"; };
-		B0A5649B1E44411F009EC182 /* test2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test2.jpg; sourceTree = "<group>"; };
 		B0DB09AB1E46EF790021C0DF /* ChapterTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChapterTitleCell.swift; sourceTree = "<group>"; };
 		B0DB09AD1E4701C70021C0DF /* ChapterContentSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChapterContentSegue.swift; sourceTree = "<group>"; };
 		B0DB09AF1E47025E0021C0DF /* ChapterContentUnwindSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChapterContentUnwindSegue.swift; sourceTree = "<group>"; };
@@ -193,7 +191,6 @@
 			isa = PBXGroup;
 			children = (
 				B043380B1E508AAB00FFC217 /* book.png */,
-				B0A5649B1E44411F009EC182 /* test2.jpg */,
 				B0A5644E1E42FF3F009EC182 /* AppDelegate.swift */,
 				B0A564521E42FF3F009EC182 /* Main.storyboard */,
 				B0A564581E42FF3F009EC182 /* Assets.xcassets */,
@@ -383,7 +380,6 @@
 				B0A5645C1E42FF3F009EC182 /* LaunchScreen.storyboard in Resources */,
 				B043380C1E508AAB00FFC217 /* book.png in Resources */,
 				B0A564591E42FF3F009EC182 /* Assets.xcassets in Resources */,
-				B0A5649C1E44411F009EC182 /* test2.jpg in Resources */,
 				B0A564541E42FF3F009EC182 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
