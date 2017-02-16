@@ -15,7 +15,6 @@ class HomeTableViewController: UITableViewController {
     var books: [Book] = [Book]()
     var bkList: [String] = []
     var selectedBook: Book!
-    //var selectedDomain: String!
     
     
     override func viewDidLoad() {
@@ -27,15 +26,6 @@ class HomeTableViewController: UITableViewController {
         BookListTable.estimatedRowHeight = 88
         //BookListTable.separatorColor = UIColor.clear
         BookListTable.separatorStyle = UITableViewCellSeparatorStyle.none
-
-
-
-        
-        // change to coredata -> store bookurl ,book name 
-//        books.append(UUBook(bookUrl: "http://sj.uukanshu.com/book.aspx?id=39314"))
-//        books.append(UUBook(bookUrl: "http://sj.uukanshu.com/book.aspx?id=48319"))
-//        books.append(DemoBook(bookUrl: "http://tw.hjwzw.com/Book/Chapter/24346"))
-//        
 
         
         // Uncomment the following line to preserve selection between presentations
@@ -69,10 +59,6 @@ class HomeTableViewController: UITableViewController {
         
         self.BookListTable.reloadData()
         
-//        for book in books {
-//            book.setBookInfo(){ bookName in // return Book name
-//            }
-//        }
     }
     
     func goToSearch(sender: UIBarButtonItem) {
@@ -88,7 +74,6 @@ class HomeTableViewController: UITableViewController {
         if segue.identifier == "showChapterListsSegue" {
             let secondViewController = segue.destination as! BookTableContentViewController
             secondViewController.bookInfo = selectedBook
-            //secondViewController.domain = selectedDomain
         }
     }
     
@@ -102,8 +87,6 @@ class HomeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You clicked me at \(indexPath.row)")
         selectedBook = books[indexPath.row]
-        //selectedDomain = books[indexPath.row].domain
-        
         self.performSegue(withIdentifier: "showChapterListsSegue", sender: self)
         
     }
@@ -151,11 +134,7 @@ class HomeTableViewController: UITableViewController {
         cell = tableView.dequeueReusableCell(withIdentifier: "bookTitleCell", for: indexPath)
         
         (cell as! BookTitleCell).textLabel?.text = titleData
-        //(cell as! BookTitleCell).detailTextLabel?.text = "Author: 作者"
         (cell as! BookTitleCell).imageView?.image = UIImage(named: "book.png")
-        // Not working
-        //(cell as! BookTitleCell).imageView?.transform = CGAffineTransform(scaleX: 5,y: 5)
-        
         return cell
     }
     

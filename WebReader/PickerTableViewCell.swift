@@ -15,10 +15,6 @@ class PickerTableViewCell: UITableViewCell {
     @IBOutlet weak var pickerName: UILabel!
     @IBOutlet weak var picker: UIPickerView!
     
-    
-    //@IBOutlet weak var pickerOptions: UIPickerView!
-    
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

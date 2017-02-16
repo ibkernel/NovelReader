@@ -57,10 +57,6 @@ class Options {
 
 
 class PickerOptions: Options {
-//    var fontSize: Int! = UserDefaults.standard.integer(forKey: "FontSize")
-//    var fontColor: String! = UserDefaults.standard.string(forKey: "FontColor")
-//    var isNightMode: Bool! = UserDefaults.standard.bool(forKey: "isNightMode")
-//    
     var pickerName: String!
     var value: [String?]
     
@@ -71,8 +67,6 @@ class PickerOptions: Options {
 }
 
 class SwitcherOptions: Options {
-//    var reminderTime: Int! = UserDefaults.standard.integer(forKey: "reminderTime")
-    //var optionName
     var value: Bool
     init(_ name: String!, _ val: Bool, keyName: String!) {
         self.value = val

@@ -10,12 +10,8 @@ import Foundation
 import Alamofire
 import Kanna
 
-var NonSense: [String] = [
-    "(adsbygoogle = window.adsbygoogle || []).push({});", "章节缺失、错误举报", "U","看书","请记住本书首发域名",
-    "言情小说网手机版阅读网址：","手机版阅读网址：", "：。"
-]
 
-var NonSense2: [String] = [
+var NonSense: [String] = [
     "請記住本站域名: 黃金屋",
 ]
 
@@ -127,7 +123,7 @@ class DemoBook: Book {
                     }
                     
                     // Compare time with the replacing function inside the above for-loop
-                    for words in NonSense2 {
+                    for words in NonSense {
                         contentText = contentText.replacingOccurrences(of: words, with: "")
                     }
                     
@@ -172,118 +168,3 @@ func getBookList(url: String, completionHandler: @escaping ([chapterTuple]) -> (
         }
     }
 }
-
-
-// UUBook can't be searched properly, -> cannot add new book on the search vc
-
-class UUBook: Book {
-    
-    override func setBookInfo(completion: @escaping (String) -> Void) {
-        Alamofire.request(self.bookUrl).response { response in
-            
-            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-                if let doc = Kanna.HTML(html: utf8Text, encoding: .utf8) {
-                    if let bookname = doc.at_css("dl dt"){
-                        let isTraditional: Bool! = UserDefaults.standard.bool(forKey: "isTraditional")
-                        if(isTraditional == true){
-                            self.bookTitle = s2t(text: bookname.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
-                        }else {
-                            self.bookTitle = bookname.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-                        }
-                        completion(self.bookTitle!)
-                    }
-                }
-            }
-        }
-    }
-
-    override func getBookChapterList(url: String, completionHandler: @escaping ([chapterTuple]) -> () ){
-        
-        var chapterList: [chapterTuple] = []
-        var chapterInfo:(String?, String?) = (nil, nil)
-        
-        Alamofire.request(url).response { response in
-            if let data = response.data, let utf8Text = String(data:data, encoding: .utf8) {
-                if let doc = Kanna.HTML(html: utf8Text, encoding: .utf8) {
-                    let isTraditional: Bool! = UserDefaults.standard.bool(forKey: "isTraditional")
-                    
-                    if(isTraditional == true){
-                        for link in doc.xpath("//div[contains(@class, 'ml-list')] // a") {
-                            chapterInfo = (text:s2t(text:link.text!), url:link["href"]!)
-                            chapterList.append(chapterInfo)
-                        }
-                    }else {
-                        for link in doc.xpath("//div[contains(@class, 'ml-list')] // a") {
-                            chapterInfo = (text:link.text!, url:link["href"]!)
-                            chapterList.append(chapterInfo)
-                        }
-                    }
-                    completionHandler(chapterList)
-                }
-            }
-        }
-    }
-
-    override func getChapterContent(url: String, completionHandler: @escaping (String, String, String?) -> ()){
-        
-        var contentText: String = ""
-        // Ckeck url completeness before concatenation
-        let fullUrl = "http://sj.uukanshu.com/" + url
-        var nextUrl: String?
-        var chapterTitle: String!
-        
-        Alamofire.request(fullUrl).response{ response in
-            if let data = response.data, var utf8Text = String(data:data, encoding: .utf8){
-                // refine content presentation
-                utf8Text = utf8Text.replacingOccurrences(of: "<br>", with: "\n")
-                utf8Text = utf8Text.replacingOccurrences(of: "<br/>", with: "\n")
-                utf8Text = utf8Text.replacingOccurrences(of: "<p>", with: "\n")
-                utf8Text = utf8Text.replacingOccurrences(of: "<p/>", with: "\n")
-                if let doc = Kanna.HTML(html: utf8Text, encoding: .utf8) {
-                    
-                    for txt in doc.xpath("//h3"){
-                        chapterTitle = s2t(text:txt.text)
-                    }
-                    
-                    contentText = chapterTitle + "\n"
-                    
-                    for content in doc.xpath("//div[contains(@id, 'bookContent')]") {
-                        contentText += content.text!
-                    }
-                    
-                    for url in doc.xpath("//div[contains(@class, 'rp-switch')] //a[contains(@id, 'read_next')]") {
-                        nextUrl = url["href"]
-                    }
-                    
-                    
-                    // Compare time with the replacing function inside the above for-loop
-                    for words in NonSense {
-                        if (words == "(adsbygoogle = window.adsbygoogle || []).push({});") {
-                            contentText = contentText.replacingOccurrences(of: "\n\n\n", with: "")
-                            //contentText = contentText.replacingOccurrences(of: "\n\n", with: "\n")
-                        }
-                        contentText = contentText.replacingOccurrences(of: words, with: "")
-                    }
-                    let isTraditional: Bool! = UserDefaults.standard.bool(forKey: "isTraditional")
-                    if (isTraditional == true){
-                        contentText = s2t(text: contentText)!
-                    }
-                    completionHandler(contentText, chapterTitle, nextUrl)
-                }
-                
-            }
-            
-        }
-        
-    }
-    
-    
-    override func printBookInfo() {
-        print("\(self.bookTitle), \(self.bookUrl)")
-    }
-    
-    init(bookUrl: String) {
-        super.init(url: bookUrl, title: "")
-    }
-}
-

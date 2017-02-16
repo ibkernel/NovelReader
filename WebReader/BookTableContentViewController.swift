@@ -15,7 +15,6 @@ class BookTableContentViewController: UITableViewController {
     var chapters: [chapterTuple] = []
     var selectedChapter: NSString!
     var selectedChapterTitle: String!
-    //var domain: String!
     
     func refresh(sender: AnyObject) {
         print("refreshing table")
@@ -56,7 +55,6 @@ class BookTableContentViewController: UITableViewController {
             secondViewController.chapterUrl = selectedChapter
             secondViewController.bookInfo = bookInfo
             secondViewController.chapterTitle = selectedChapterTitle
-            //secondViewController.domain = domain
         }
     }
     

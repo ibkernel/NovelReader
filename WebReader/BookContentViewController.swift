@@ -11,7 +11,6 @@ import UIKit
 class BookContentViewController: UIViewController {
 
     @IBOutlet weak var chapterContentText: UITextView!
-    //var domain : String!
     var chapterUrl : NSString!
     var bookInfo : Book!
     var nextUrl: NSString?
@@ -115,7 +114,6 @@ class BookContentViewController: UIViewController {
         print("In returnToChapterList")
         
         _ = self.navigationController?.popToViewController((self.navigationController?.viewControllers[1])! , animated: true)
-        //self.navigationController!.popToViewController(BookTableContentViewController() as! UIViewController, animated: true);
     }
     
     
@@ -140,8 +138,6 @@ class BookContentViewController: UIViewController {
     @IBAction func doubleTapAction(_ sender: Any) {
         // TODO: store this value to user setting table
         self.navigationController?.isNavigationBarHidden = !(self.navigationController?.isNavigationBarHidden)!
-        //navigationController?.isNavigationBarHidden = true
-        //self.navigationController?.navigationBar.isHidden = !(self.navigationController?.navigationBar.isHidden)!
     }
     
     @IBAction func handleSwipeGesture(_ sender: Any) {
@@ -156,7 +152,6 @@ class BookContentViewController: UIViewController {
             controller.preprocessTitle = self.preprocessTitle
             controller.preprocessContent = self.preprocessContent
             controller.preprocessUrl = self.preprocessUrl
-            //controller.domain = self.domain
             let segue = UIStoryboardSegue(identifier: "NextChapterSegue", source: self, destination: controller, performHandler: {self.navigationController?.show( controller, sender: self)})
             segue.perform()
         } else {
